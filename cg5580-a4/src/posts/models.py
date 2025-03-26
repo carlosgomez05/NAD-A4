@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 from profiles.models import Profile
-
 # Create your models here.
 
 class Post(models.Model):
@@ -14,3 +13,7 @@ class Post(models.Model):
 
     def __str__(self):
         return str(self.title)
+    
+    @property
+    def like_count(self):
+        return self.liked.all().count()
