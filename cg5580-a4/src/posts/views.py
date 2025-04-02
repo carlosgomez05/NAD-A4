@@ -102,6 +102,7 @@ def delete_post(request, pk):
         obj.delete()
     return JsonResponse({})
 
+#forgot to commit this video - also include urls
 def image_upload_view(request):
     # print(request.FILES)
     if request.method == 'POST':
