@@ -171,7 +171,8 @@ postForm.addEventListener('submit', e=> {
     })
 })
 
-addBtn.addEventListener('click', ()=>{
+addBtn.addEventListener('click', (e)=>{
+    e.preventDefault
     dropZone.classList.remove('not-visible')
 })
 
@@ -180,6 +181,8 @@ closeBtns.forEach(btn=> btn.addEventListener('click', ()=>{
     if (!dropZone.classList.contains('not-visible')) {
         dropZone.classList.add('not-visible')
     }
+    const myDropzone = Dropzone.forElement('#my-dropzone')
+    myDropzone.removeAllFiles(true)
 }))
 
 Dropzone.autoDiscover = false

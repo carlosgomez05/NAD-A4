@@ -53,6 +53,7 @@
             </div>
         </div>
     </div>
+    <div class="mt-1" id="post-box"></div>
     {% if obj.get_photos %}
         <div id="carouselExampleControls" class="carousel slide mb-2" data-bs-ride="carousel">
             <div class="carousel-inner">
@@ -74,12 +75,11 @@
     {% else %}
         <div class="mt-2 b=mb-2"> No photos to show</div> 
     {% endif %}
-
-    <button id="back-btn" class="btn btn-info">Back</button>
+    
+    <a href="{% url 'posts:main-board' %}" id="back-btn" class="btn btn-info">Back</a>
     <button id="update-btn" class="btn btn-primary not-visible" data-bs-toggle="modal" data-bs-target="#updateModal">Update</button>
     <button id="delete-btn" class="btn btn-danger not-visible" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
     <div id="spinner-box" class="text-center">
         <div class="spinner-border" role="status"></div>
     </div>
-    <div class="mt-1" id="post-box"></div>
 {% endblock content %}
