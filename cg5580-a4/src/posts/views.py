@@ -102,7 +102,6 @@ def delete_post(request, pk):
         obj.delete()
     return JsonResponse({})
 
-#forgot to commit this video - also include urls
 def image_upload_view(request):
     # print(request.FILES)
     if request.method == 'POST':
@@ -110,4 +109,4 @@ def image_upload_view(request):
         new_post_id = request.POST.get('new_post_id')
         post = Post.objects.get(id=new_post_id)
         Photo.objects.create(image=img, post=post)
-    return HttpResponse
+    return HttpResponse()
