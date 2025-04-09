@@ -46,14 +46,23 @@
                 <div class="modal-footer">
                     <form id="delete-form">
                         {% csrf_token %}
-                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-success">Delete</button>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success">Delete</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+    
+    <div class="author-info mb-4">
+        <div class="d-flex align-items-center">
+            <img src="{{obj.author.avatar.url}}" class="rounded-circle me-3" height="50" width="50" alt="{{obj.author.user.username}}">
+            <h6 class="mb-0">{{obj.author.user.username}}</h6>
+        </div>
+    </div>
+    
     <div class="mt-1" id="post-box"></div>
+    
     {% if obj.get_photos %}
         <div id="carouselExampleControls" class="carousel slide mb-2" data-bs-ride="carousel">
             <div class="carousel-inner">

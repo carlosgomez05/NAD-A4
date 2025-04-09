@@ -38,6 +38,15 @@ $.ajax({
             deleteBtn.classList.remove('not-visible')
         }
 
+        const authorDiv = document.createElement('div')
+        authorDiv.setAttribute('class', 'author-info mb-4')
+        authorDiv.innerHTML = `
+            <div class="d-flex align-items-center">
+                <img src="${data.avatar}" class="rounded-circle me-3" height="50" width="50" alt="${data.author}">
+                <h6 class="mb-0">${data.author}</h6>
+            </div>
+        `
+        
         const titleEl = document.createElement('h3')
         titleEl.setAttribute('class', 'mt-3')
         titleEl.setAttribute('id', 'title')
