@@ -1,7 +1,7 @@
 from django.shortcuts import render
-from .models import Post, Photo
+from .models import Post, Photo, Comment
 from django.http import JsonResponse, HttpResponse
-from .forms import PostForm
+from .forms import PostForm, CommentForm
 from profiles.models import Profile
 from .utils import action_permission
 from django.contrib.auth.decorators import login_required
@@ -36,10 +36,14 @@ def post_list_and_create(request):
 def post_detail(request, pk):
     obj = Post.objects.get(pk=pk)
     form = PostForm()
+    comment_form = CommentForm()
+    comments = obj.comments.all()
 
     context = {
         'obj': obj,
         'form': form,
+        'comment_form': comment_form,
+        'comments': comments,
     }
 
     return render(request, 'posts/detail.html', context)
@@ -128,3 +132,21 @@ def image_upload_view(request):
         post = Post.objects.get(id=new_post_id)
         Photo.objects.create(image=img, post=post)
     return HttpResponse()
+
+@login_required
+def create_comment(request, pk):
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        post = Post.objects.get(pk=pk)
+        body = request.POST.get('body')
+        new_comment = Comment.objects.create(
+            post=post,
+            user=request.user,
+            body=body
+        )
+        return JsonResponse({
+            'body': new_comment.body,
+            'created': new_comment.created.strftime('%B %d, %Y'),
+            'username': new_comment.user.username,
+            'profile_pic': new_comment.user.profile.avatar.url,
+        })
+    return redirect('posts:post-detail', pk=pk)

@@ -17,11 +17,13 @@ const spinnerBox = document.getElementById('spinner-box')
 const titleInput = document.getElementById('id_title')
 const bodyInput = document.getElementById('id_body')
 
+
+const commentForm = document.getElementById('comment-form')
+const commentBody = commentForm.querySelector('textarea')
+const commentsBox = document.getElementById('comments-box')
+
 const csrf = document.getElementsByName('csrfmiddlewaretoken')
 
-// backBtn.addEventListener('click', () => {
-//     history.back()
-// })
 
 $.ajax({
     type: 'GET',
@@ -113,6 +115,41 @@ deleteForm.addEventListener('submit', e=>{
         },
         error: function(error) {
             console.log(error)
+        }
+    })
+})
+
+commentForm.addEventListener('submit', e => {
+    e.preventDefault()
+    
+    $.ajax({
+        type: 'POST',
+        url: window.location.href + 'comment/',
+        data: {
+            'csrfmiddlewaretoken': csrf[0].value,
+            'body': commentBody.value,
+        },
+        success: function(response) {
+            commentsBox.insertAdjacentHTML('afterbegin', `
+                <div class="card mb-2">
+                    <div class="card-body">
+                        <div class="d-flex mb-2">
+                            <img src="${response.profile_pic}" class="rounded-circle me-2" width="30" height="30">
+                            <div>
+                                <h6 class="mb-0">${response.username}</h6>
+                                <small class="text-muted">${response.created}</small>
+                            </div>
+                        </div>
+                        <p class="card-text">${response.body}</p>
+                    </div>
+                </div>
+            `)
+            commentForm.reset()
+            handleAlerts('success', 'Comment added successfully')
+        },
+        error: function(error) {
+            console.log(error)
+            handleAlerts('danger', 'Something went wrong')
         }
     })
 })
